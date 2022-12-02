@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png" href="resources/images/favicon.ico"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="resources/vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="resources/css/util.css">
+	<link rel="stylesheet" type="text/css" href="resources/css/main.css">
+<!--===============================================================================================-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="./resources/js/basic.js"></script>
+<script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+<script>
+    function instructions()
+    {
+        console.log('clicked for info')
+    }
+</script>
+    <title>Document</title>
+<style>
+    #webxr, #oculusvr{
+        color:antiquewhite;
+        font-size: medium;
+    }
+    #general
+    {
+        float:right;
+        color:antiquewhite;
+        font-size: 150%;
+        margin-right: 5%;
+        margin-top:-3%;
+        color:aqua;
+        cursor: pointer;
+    }
+    .box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
+
+.button {
+  font-size: 1em;
+  padding: 10px;
+  color: #fff;
+  border: 2px solid #e8e5e9;
+  border-radius: 20px/50px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+}
+.button:hover {
+  background: #cbb6d3;
+  color: rgb(11, 9, 9)
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+  z-index: 99999;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 10px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  font-family: monospace;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #020101;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+</style>
+<script>
+  localStorage.clear();
+</script>
+</head>
+<body style="background-image: url('resources/images/spacebg.gif');width:full;height:full;">
+    <h1 style="font-family: 'Dancing Script', cursive; padding-top:30px; padding-left:20px; color:bisque; background-repeat:no-repeat; " >
+        Asteroid's are on their way!!</h1>
+            <br/><br/>
+        <a class="button" href="#popup1">General Instructions:</a>
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <a class="close" href="#">&times;</a>
+                <div class="content">
+                    Disclaimer:<br/><br/>
+                    
+                    <p>-    The near-earth objects(NEOs) and Earth models are not accuratee and not to scal. <br/>
+                       -    This site is intended to provide a general details of NEOs  <br/>
+                       -    Don't travel beyond the Sun
+                    </p>     
+                    Controls:
+                    <p style="font-variant: small-caps;">
+                        &ensp;--  Keyboard: <br/>
+                    </p>
+                    <p>&emsp; Move around:Arrow keys/ WASD keys <br/>
+                        &emsp;Reset Camera Position :  R<br/>
+                        &emsp;Toggle Camera Rotation : P
+                        &emsp;Previous Page : B
+                    </p>
+                    <p style="font-variant: small-caps;">
+                        &ensp;--  Oculus: <br/>
+                    </p>
+                    <p>&emsp; Move Around : Left/ Right joystick <br/>
+                        &emsp;Reset Camera Position : <br/>
+                        &emsp;Toggle Camera Rotation : <br/>
+                        &emsp;Previous Page  :
+                    </p>
+                </div>
+            </div>
+        </div>
+    <form method="GET" action="./asteroid.html" >
+        <div class="wrap-login100" style="background:none">
+            <div class="wrap-input100 validate-input">
+                <p id="webxr"> Enter the date if your using webXR:</p><br/>
+                <input id='date1' class="input100 animate__fadeInLeft" type="date" name="date1"  /><br/><br/>
+                <p id="oculusvr"> Enter the date if your using Oculus:</p><br/>
+                <input id='date2' class="input100 animate__fadeInLeft" type="text" name="date1" placeholder="yyyy-mm-dd" /><br/><br/>
+                <script>
+                    function fetch()
+                    {
+                        const date = document.getElementById('date1').value;
+                        const date2 = document.getElementById('date2').value;
+                        const date1 = date || date2;
+                        console.log(date1);
+                        const apiKey='jKjtLEaaGUQa4WrI25UFp5d3cKaTEAoJJNmh737B';
+                        const url='https://api.nasa.gov/neo/rest/v1/feed?start_date='+date1+'&end_date='+date1+'&api_key='+apiKey;
+                        let check = null;
+                        let request = new XMLHttpRequest();
+                        request.open("GET", url);
+                        request.send();
+                        confirm('Please confirm your input date : '+date1);
+                        
+                        request.onload = () => {
+                            if (request.status === 200) {
+                                data = JSON.stringify(request.response);
+                                console.log('hi'+data)
+                                localStorage.setItem('jsondata', data)
+                                localStorage.setItem('inpdate',date1)
+                        wait();
+                        } else {
+                            confirm("Please enter a valid date! ");
+                            location.reload();
+                            console.log(`error ${request.status} ${request.statusText}`);
+                        }
+                    };
+                    }
+                    </script>
+            </div>
+            <div class="container-login100-form-btn">
+                <a href="./asteroid.html" onclick="wait();"><input type="submit" value="submit" class="login100-form-btn" onclick="fetch();"></a>
+            </div>
+        </div>
+    </form>
+    
+<!-- 
+   <div class="earth_image">
+    <img src="images/earth-removebg-preview.png">
+   </div> -->
+
+
+<!--===============================================================================================-->	
+
+<!--===============================================================================================-->
+	<script src="resources/js/main.js"></script>    
+</body>
+</html>

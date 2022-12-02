@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <script src="https://cdn.rawgit.com/jujunjun110/aframe-crawling-cursor/master/dist/aframe-crawling-cursor.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
+    <script src="./resources/js/teleport.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./resources/js/basic.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+    <title>Hit or Miss</title>
+    <script>
+        function final_loading(astID)
+        {
+            count = localStorage.getItem('count');
+            for(var i=0; i<count;i++)
+                document.getElementById(i).setAttribute('visible',false);
+
+            document.getElementById('orbit').setAttribute('radius-outer',0.4501)
+            models();
+            details();
+            document.getElementById('det').setAttribute('text',{width:0.8})
+            document.getElementById('info').setAttribute('text',{width:0.8})
+            document.getElementById('innerrig').setAttribute('animation',"property: rotation; to:360 360 0; loop: true; dur: 300000; fill:forward; easing:linear;")
+            document.getElementById('asteroid').setAttribute('visible',true);
+            // setTimeout( $("#includedScene").load('basic.html'),5000) 
+        }
+    </script>
+</head>
+<body >
+    <!-- <script>
+        document.querySelector('a-scene').enterVR();
+    </script> -->
+    <a-scene enterVR="true" id="content" onload="checking(); ">
+        <a-sound src="src:url(/resources/sounds/welcome.mp3)" autoplay="true" position="0 0 0" volume="8" refDistance="100" loop="true"></a-sound>
+        <a-assets>
+            <img id="back" src="resources/images/pexels-instawalli-176851.jpg">
+        </a-assets>
+        
+        <a-sky src="#back"></a-sky>
+        </a-sky>
+        
+        <a-entity id = "rig" movement-controls = "fly:true" position="0 0 8" >
+        <a-entity id="innerrig">
+            <a-camera   wasd-controls="fly:true" look-controls=" pointerLockEnabled:true;" id = "camera">
+                <a-entity text="lineHeight:60;xOffset:0.25;opacity:0.2;color:#fff;side:double;transparent: true; value:reset - X \n pause- A \n back - B" cursor position="0 0 -1" 
+                    geometry="primitive: sphere; radius:0.010"
+                    material="color:#FFFFFF; shader:flat; opacity:0.5" id='cursor'>
+                </a-entity>
+                <!-- <a-text position = "0 0 -1" scale = "10 10 10">Hello OWrld</a-text> -->
+                <!-- <a-entity oculus-touch-controls="hand: left"  position = "0 -1 -1" x-button-listener>
+                    <a-sphere radius = "5"> </a-sphere>
+                </a-entity>
+                <a-entity oculus-touch-controls="hand: right" position = "0 -1 -1" x-button-listener>
+                    <a-sphere radius = "5"> </a-sphere>
+                </a-entity> -->
+            </a-camera>
+            <a-entity oculus-touch-controls="hand: left" x-button-listener></a-entity>
+            <a-entity oculus-touch-controls="hand: right" x-button-listener></a-entity>
+        </a-entity>
+
+            
+        
+        </a-entity>
+        <!-- All asteroids -->
+        <a-entity id="spheredad" animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; fill:forward; easing:linear;">
+            <a-sphere id="earth" src="https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/space/earth_atmos_4096.jpg" radius="1.2" segments-height="53"> 
+            </a-sphere>
+        </a-entity>
+
+        <a-mixin id="scaleUpMixin" animation__scale="property: rotation; dur: 40000; to: 0 360 0; loop: true; fill:forward; easing:	easeOutQuad;"></a-mixin>
+        <!-- <a-scene>
+         <a-sphere id='sun' text='value: Sun;' animation="property: rotation; to:360 360 0; loop: true; dur: 30000; fill:forward; easing:linear;"  src="./resources/images/sun.jpg" position='0 0 500' radius="12"  > </a-sphere></a-scene> -->
+        <!-- Asteriods assets -->
+        <a-assets>
+            <a-asset-item id="asteroid1" src="resources/images/asteroid1.gltf"></a-asset-item>
+            <a-asset-item id="asteroid2" src="resources/images/p_asteroid.glb"></a-asset-item>
+            <a-asset-item id="asteroid3" src="resources/images/asteroid3.gltf"></a-asset-item>
+            <a-asset-item id="asteroid4" src="resources/images/asteroid4.gltf"></a-asset-item>
+            <a-asset-item id="asteroid5" src="resources/images/asteroid5.gltf"></a-asset-item>
+            <a-asset-item id="asteroid6" src="resources/images/asteroid6.gltf"></a-asset-item>
+        </a-assets>
+        <a-entity id="includedScene"></a-entity>
+
+        <!-- Asteriod details  -->
+                <a-ring id="orbit" position="0 0 0" color="white" radius-inner="0.45" radius-outer="0.4500" scale ='18 18 18'></a-ring>
+        <a-entity animation="property: rotation; to:0 0 360; loop: true; dur: 30000; fill:forward; easing:linear;">
+        <a-entity id= 'asteroid' gltf-model="#tree" position=" 0 8.1 0" scale="0.15 0.15 0.15" animation="property: rotation; to: 0 360 360; loop: true; dur: 30000" ></a-entity></a-entity>
+        <a-entity camera look-controls>
+            <a-entity id="det" cursor="fuse: true; fuseTimeout: 500 raycaster=slowline:true"
+                position="4 3 0"
+                material="color: black; shader: flat"
+                text="lineHeight:60;color:#0000;align:left;width:1.1;side:double;transparent: true; value:" scale="5 5 5"  >
+            </a-entity>
+            <a-entity id="info" cursor="fuse: true; fuseTimeout: 5000 raycaster=slowline:true"
+            position="7.5 3 0"
+            material="color: black; shader: flat"
+            text="lineHeight:60;color:#0000;align:left;side:double;transparent: true; value:" scale="5 5 5"  >
+            <a-entity light="color: #fffff; intensity: 3.5" position="0 0 10"></a-entity>
+            </a-entity>
+        </a-entity>
+    </a-scene>
+    <script src='resources/js/asteroid.js'></script>
+</body>
+</html>
